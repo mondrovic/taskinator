@@ -157,7 +157,7 @@ var completeEditTask = function(taskName, taskType, taskId){
     document.querySelector("#save-task").textContent = "Add Task";
 }
 
-targets based on id. modifies group based on 
+
 var taskStatusChangeHandler = function(event){
     var taskId = event.target.getAttribute("data-task-id");
     var statusValue = event.target.value.toLowerCase();

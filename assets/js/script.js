@@ -64,6 +64,8 @@ var createTaskEl = function(taskDataObj){
         taskDataObj.id= taskIdCounter;
         tasks.push(taskDataObj);
 
+        saveTasks();
+
         // adds buttons to unique data-*
         var taskActionsEl = createTasksAction(taskIdCounter);
         // appends list item to add buttons
@@ -146,6 +148,7 @@ var deleteTask = function(taskId){
     }
 
     tasks = updatedTaskArr;
+    saveTasks();
 }
 
 // creates a function to edit item entry and then pipes into handler
@@ -176,6 +179,8 @@ var completeEditTask = function(taskName, taskType, taskId){
         };
     }
 
+    saveTasks();
+
     alert("Task Updated!");
 
     formEl.removeAttribute("data-task-id");
@@ -202,6 +207,8 @@ var taskStatusChangeHandler = function(event){
             tasks[i].status = statusValue;
         };
     }
+
+    saveTasks();
 }
 
 // event listener handler for dragging
@@ -255,6 +262,8 @@ var dropTaskHandler = function(event){
             tasks[i].status = statusSelectEl.value.toLowerCase();
         };
     }
+
+    saveTasks();
 }
 
 // removes hover styleing
@@ -263,6 +272,10 @@ var dragLeaveHandler = function(event){
     if(taskListEl){
         taskListEl.removeAttribute("style")
     }
+}
+
+var saveTasks = function(){
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 // button listeners

@@ -216,8 +216,6 @@ var dragTaskHandler = function(event){
     var taskId = event.target.getAttribute("data-task-id");
     // store taskId in data transfer property
     event.dataTransfer.setData("text/plain", taskId);
-    
-    var getId = event.dataTransfer.getData("text/plain");
 }
 
 // limits where items can be dragged; uses closest to limit
@@ -278,6 +276,19 @@ var saveTasks = function(){
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+var loadTasks = function(){
+    var savedTasks = localStorage.getItem("tasks");
+
+    if(!saveTasks){
+        return false;
+    }
+    savedTasks = JSON.parse(savedTasks);
+
+    for (var i = 0; i < savedTasks.length; i++){
+        createTaskEl(savedTasks[i]);
+    }
+}
+
 // button listeners
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
@@ -288,3 +299,5 @@ pageContentEl.addEventListener("dragstart", dragTaskHandler);
 pageContentEl.addEventListener("dragover", dropZoneDragHandler);
 pageContentEl.addEventListener("drop", dropTaskHandler);
 pageContentEl.addEventListener("dragleave", dragLeaveHandler);
+
+loadTasks();

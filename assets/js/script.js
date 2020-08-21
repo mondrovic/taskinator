@@ -186,10 +186,11 @@ var dropZoneDragHandler = function(event){
     var taskListEl = event.target.closest(".task-list");
     if(taskListEl){
         event.preventDefault();
+        taskListEl.setAttribute("style", "background: rgba(68, 233, 255, 0.7); border-style: dashed;");
     }
 }
 
-// creates a handler to actually drop element
+// creates a handler to drop elements
 var dropTaskHandler = function(event){
     // retrieves id from dragTaskHandler
     var id = event.dataTransfer.getData("text/plain");
@@ -212,14 +213,27 @@ var dropTaskHandler = function(event){
         statusSelectEl.selectedIndex = 2;
     }
 
+    dropZoneEl.removeAttribute("style");
+
     // appends the current droppable element
     dropZoneEl.appendChild(draggableElement);
 }
 
-// adds various event listeners for page
+// removes hover styleing
+var dragLeaveHandler = function(event){
+    var taskListEl = event.target.closest(".task-list");
+    if(taskListEl){
+        taskListEl.removeAttribute("style")
+    }
+}
+
+// button listeners
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+//drag and drop
 pageContentEl.addEventListener("dragstart", dragTaskHandler);
 pageContentEl.addEventListener("dragover", dropZoneDragHandler);
 pageContentEl.addEventListener("drop", dropTaskHandler);
+pageContentEl.addEventListener("dragleave", dragLeaveHandler);
